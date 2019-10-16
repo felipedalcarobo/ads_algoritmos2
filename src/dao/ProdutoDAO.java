@@ -13,9 +13,10 @@ import model.Categoria;
  */
 public class ProdutoDAO {
     public static void inserir(Produto produto){
-            String query = "INSERT INTO produto ( produto, categoria ) "
+            String query = "INSERT INTO produto ( produto, categoria, quantidade, preco ) "
                 + " VALUES ('" + produto.getProduto() + "' , "                
                 + " '" + produto.getCategoria().getId_categoria()+ "' , "
+                + " '" + produto.getQuantidade() + "' , "
                 + " '" + produto.getPreco()+ "') ";
 ;
         Conexao.executar( query );
@@ -25,6 +26,7 @@ public class ProdutoDAO {
         String query = "UPDATE produto SET "
                      + " produto =  '" + produto.getProduto() + "' , "
                      + " preco =  '" + produto.getPreco()+ "' , "
+                     + " quantidade =  '" + produto.getQuantidade()+ "' , "
                      + " categoria = '" + produto.getCategoria().getId_categoria()+ "' , "
                      + " WHERE id = " + produto.getId_produto();
         Conexao.executar( query );
@@ -38,7 +40,7 @@ public class ProdutoDAO {
     
     public static List<Produto> getProduto(){
         List<Produto> lista = new ArrayList<>();
-        String query = "SELECT a.id_produto, a.produto, a.preco, "
+        String query = "SELECT a.id_produto, a.produto, a.quantidade, a.preco, "
                      + " b.id_categoria, b.categoria "
                      + " FROM produto a "
                      + " INNER JOIN categoria b "
@@ -53,11 +55,12 @@ public class ProdutoDAO {
                     Produto prod = new Produto();
                     prod.setId_produto( rs.getInt( 1 ) );
                     prod.setProduto( rs.getString( 2 ) );
-                    prod.setPreco( rs.getString( 3 ));
+                    prod.setQuantidade(rs.getString( 3 ) );
+                    prod.setPreco( rs.getString( 4 ));
                     
                     Categoria cat = new Categoria();
-                    cat.setId_categoria( rs.getInt( 4 ));
-                    cat.setCategoria( rs.getString( 5 ));
+                    cat.setId_categoria( rs.getInt( 5 ));
+                    cat.setCategoria( rs.getString( 6 ));
                     
                     prod.setCategoria(cat);
                     lista.add(prod);

@@ -5,6 +5,12 @@
  */
 package view;
 
+import dao.CategoriaDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Categoria;
+
 /**
  *
  * @author 631220016
@@ -16,6 +22,28 @@ public class ListCategoria extends javax.swing.JInternalFrame {
      */
     public ListCategoria() {
         initComponents();
+        carregarTabela();
+    }
+    
+    public void carregarTabela(){
+        List<?> lista = new ArrayList<>();
+        String[] colunas = {"Código" , "Categoria"};
+        
+        lista = CategoriaDAO.getCategoria();        
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers( colunas );
+       
+        for (Object categ : lista) {
+            Categoria cat = (Categoria) categ;
+            Object[] linha = {};
+            linha = new Object[]{cat.getId_categoria(),
+                    cat.getCategoria()};
+            
+            model.addRow( linha );
+        }        
+        
+        tableCategorias.setModel( model );
     }
 
     /**
@@ -27,15 +55,33 @@ public class ListCategoria extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableCategorias = new javax.swing.JTable();
+
+        tableCategorias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id Categoria", "Categoria"
+            }
+        ));
+        jScrollPane1.setViewportView(tableCategorias);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -43,5 +89,7 @@ public class ListCategoria extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableCategorias;
     // End of variables declaration//GEN-END:variables
 }

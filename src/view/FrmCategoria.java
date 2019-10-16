@@ -102,6 +102,9 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
             
             //Fechar a tela
             this.dispose();
+            
+            //ListCategoria listCat = new ListCategoria();
+            //listCat.carregarTabela();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

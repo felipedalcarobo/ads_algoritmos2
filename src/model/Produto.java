@@ -8,7 +8,9 @@ public class Produto {
     private int id_produto;    
     private Categoria categoria;
     private String produto;    
-    private String preco;
+    private String preco;    
+    private String quantidade;
+
 
 
     @Override
@@ -16,6 +18,14 @@ public class Produto {
         return produto;
     }
 
+    public String getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(String quantidade) {
+        this.quantidade = quantidade;
+    }
+    
     public Categoria getCategoria() {
         return categoria;
     }

@@ -5,18 +5,62 @@
  */
 package view;
 
+import dao.CategoriaDAO;
+import dao.ProdutoDAO;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import model.Categoria;
+import model.Produto;
+
 /**
  *
  * @author 631220016
  */
 public class FrmProduto extends javax.swing.JInternalFrame {
 
+    private ListProduto telaListProdutos;    
+    private Produto produto;
+
     /**
      * Creates new form FrmProduto
      */
     public FrmProduto() {
         initComponents();
+        carregarCategorias();
     }
+    
+    public FrmProduto(int idProduto, ListProduto telaListProduto) {
+        initComponents();
+        carregarFormulario( idProduto );
+        this.telaListProdutos = telaListProduto;
+    }
+    
+    private void carregarFormulario( int idProduto ){
+        produto = ProdutoDAO.getProdutoById(idProduto );
+        TextNome.setText( produto.getProduto());
+        TextPreco.setText(produto.getPreco());
+        TextQntd.setText(produto.getQuantidade());
+    }
+    
+    private void carregarCategorias(){
+        List<Categoria> listaCategorias = CategoriaDAO.getCategoria();
+       
+        DefaultComboBoxModel model = 
+                new DefaultComboBoxModel();
+        
+        Categoria fake = new Categoria();
+        fake.setId_categoria(0);
+        fake.setCategoria("Selecione...");
+        model.addElement(fake); 
+        
+        for (Categoria cat : listaCategorias) {
+            model.addElement( cat );
+        }
+        ComboBoxCategoria.setModel( model );
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,21 +71,138 @@ public class FrmProduto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TextNome = new javax.swing.JTextField();
+        TextPreco = new javax.swing.JTextField();
+        TextQntd = new javax.swing.JTextField();
+        ComboBoxCategoria = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+
+        jLabel1.setText("Nome Produto");
+
+        jLabel2.setText("Preço");
+
+        jLabel3.setText("Quantidade");
+
+        jLabel4.setText("Categoria");
+
+        ComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("SALVAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(ComboBoxCategoria, 0, 212, Short.MAX_VALUE)
+                    .addComponent(TextQntd)
+                    .addComponent(TextPreco)
+                    .addComponent(TextNome)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextNome, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextQntd, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nome = TextNome.getText();
+        String preco = TextPreco.getText();
+        String quantidade = TextQntd.getText();
+        Categoria cat = (Categoria) ComboBoxCategoria.getSelectedItem();
+        String erro = "";
+        
+        if( cat.getId_categoria()== 0 ){
+            erro += "Cidade\n";
+        }
+        if( nome.isEmpty() ){
+            erro += "Cidade\n";
+        }
+        if( preco.isEmpty() ){
+            erro += "Cidade\n";
+        }
+        if( quantidade.isEmpty() ){
+            erro += "Cidade\n";
+        }        
+        
+        if (! erro.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Você esqueceu de preencher os seguintes campos:\n" 
+                + erro );
+        }else{
+            Produto produto = new Produto();
+            produto.setProduto( nome );
+            produto.setPreco( preco );
+            produto.setQuantidade( quantidade );
+            produto.setCategoria(cat);
+            
+            ProdutoDAO.inserir(produto);
+            
+            limpar();
+            
+            //Fechar a tela
+            this.dispose();
+            
+            //ListCategoria listCat = new ListCategoria();
+            //listCat.carregarTabela();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void limpar() {
+        TextNome.setText("");
+        TextPreco.setText("");
+        TextQntd.setText("");
+        ComboBoxCategoria.setSelectedIndex( 0 );
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxCategoria;
+    private javax.swing.JTextField TextNome;
+    private javax.swing.JTextField TextPreco;
+    private javax.swing.JTextField TextQntd;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

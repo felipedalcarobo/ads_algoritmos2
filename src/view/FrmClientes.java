@@ -150,6 +150,11 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         jLabel8.setText("Cidade:");
 
         cmbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Alvorada", "Canoas", "Capão da Canoa", "Porto Alegre", "Viamão" }));
+        cmbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCidadeActionPerformed(evt);
+            }
+        });
 
         cbEmail.setText("Aceito receber E-mail");
 
@@ -336,6 +341,10 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         lblCNPJ.setVisible(true);
         txtCNPJ.setVisible(true);
     }//GEN-LAST:event_rbPJActionPerformed
+
+    private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCidadeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
