@@ -34,7 +34,7 @@ public class ProdutoDAO {
     
     public static void excluir(int id_produto){
         String query = "DELETE FROM produto  "
-                     + " WHERE id = " + id_produto;
+                     + " WHERE id_produto = " + id_produto;
         Conexao.executar( query );
     }
     

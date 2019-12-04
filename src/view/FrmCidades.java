@@ -15,6 +15,9 @@ import model.Cidade;
  */
 public class FrmCidades extends javax.swing.JInternalFrame {
 
+    private Cidade cidade;
+    
+    private ListCidades telaListCidades;
     /**
      * Creates new form FrmCidades
      */
@@ -22,6 +25,24 @@ public class FrmCidades extends javax.swing.JInternalFrame {
         initComponents();
         lblCodigo.setVisible(false);
         lblCodigoValor.setVisible(false);
+    }
+    
+    // Este método Construtor recebe o id da Cidade que será editada e a 
+    // referência da tela ListCidades que chamou este formulário, para que ao 
+    // final da edição a tebela no ListCidades possa ser atualizada, senão o 
+    // usuário pensará que não salvou a alteração no banco
+    public FrmCidades(int idCidade, ListCidades telaListCidades) {
+        initComponents();
+        lblCodigo.setVisible(false);
+        lblCodigoValor.setVisible(false);
+        carregarFormulario( idCidade );
+        this.telaListCidades = telaListCidades;
+    }
+    
+    private void carregarFormulario( int idCidade ){
+        cidade = CidadeDAO.getCidadeById( idCidade );
+        lblCodigoValor.setText( String.valueOf( cidade.getId() ) );
+        txtNome.setText( cidade.getNome() );
     }
 
     /**

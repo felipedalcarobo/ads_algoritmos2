@@ -111,6 +111,22 @@ public class ListProduto extends javax.swing.JInternalFrame {
 
     private void ButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluirActionPerformed
         // TODO add your handling code here:
+        int linha = TableProdutos.getSelectedRow();
+        if( linha < 0 ){
+            JOptionPane.showMessageDialog(this, 
+                    "Você deve selecionar um produto");
+        }else{
+            String nome = (String) TableProdutos.getValueAt(linha, 1);
+            int resposta = JOptionPane.showConfirmDialog(this,
+                    "Confirma que deseja excluir o produto " +nome+ "?", 
+                    "Excluir Produto",
+                    JOptionPane.YES_NO_OPTION);
+            if( resposta == JOptionPane.YES_OPTION){
+                int id = (int) TableProdutos.getValueAt(linha, 0);
+                ProdutoDAO.excluir( id );
+                carregarTabela();
+            }
+        }
     }//GEN-LAST:event_ButtonExcluirActionPerformed
 
     private void ButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditarActionPerformed
@@ -118,7 +134,7 @@ public class ListProduto extends javax.swing.JInternalFrame {
         int linha = TableProdutos.getSelectedRow();
         if( linha < 0 ){
             JOptionPane.showMessageDialog(this, 
-                    "Você deve selecionar uma cidade");
+                    "Você deve selecionar um produto");
         }else{
             int idProduto = (int) TableProdutos.getValueAt(linha, 0);
             FrmProduto tela = new FrmProduto(idProduto, this );
